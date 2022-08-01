@@ -2,12 +2,13 @@ import { APIGatewayEvent, Context } from 'aws-lambda'
 
 import { schoolService } from '../lib/school/school.service'
 export const handler = async (event: APIGatewayEvent, context: Context) => {
-  const user = schoolService.getUser('abc')
-  console.log({ event, context })
+  const schoolId = event.pathParameters!.id!
+  const schoolDetails = schoolService.getSchool(schoolId)
+  if (!schoolDetails) return { statusCode: 200, body: JSON.stringify({ message: `${schoolId} does not exist` }) }
   return {
     statusCode: 200,
     body: JSON.stringify({
-      message: 'hello world',
+      schoolDetails,
     }),
   }
 }
