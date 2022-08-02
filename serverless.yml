@@ -8,22 +8,28 @@ provider:
   lambdaHashingVersion: '20201221'
   httpApi:
     cors: true
+  environment: ${file(env.yml):${self:custom.stage}}
   iam:
     role:
       statements:
         - Effect: Allow
           Action:
-            - dynamodb:Query
-            - dynamodb:Scan
-            - dynamodb:GetItem
-            - dynamodb:PutItem
-            - dynamodb:UpdateItem
-            - dynamodb:DeleteItem
-          Resource: 'arn:aws:dynamodb:eu-west-1:133673240656:table/School-system'
+            - 'dynamodb:*'
+            - 'ec2:CreateNetworkInterface'
+            - 'ec2:DescribeNetworkInterfaces'
+            - 'ec2:DeleteNetworkInterface'
+            - 'secretsmanager:GetSecretValue'
+          Resource:
+            - '*'
 
 custom:
   stage: dev
   dynamodb:
+    seed:
+      domain:
+        sources:
+          - table: schoolTable
+          - sources: [./resources/migrations/v0.json]
     stages:
       - dev
     start:
@@ -42,7 +48,7 @@ functions:
     handler: src/api/get.school.api.handler
     events:
       - http:
-          path: school/{_id}
+          path: school/{id}
           method: get
   postSchool:
     handler: src/api/post.school.api.handler
@@ -62,3 +68,6 @@ functions:
       - http:
           path: school
           method: patch
+
+Resources:
+  - ${file(./resources/dynamo.yml)}

@@ -1,0 +1,26 @@
+{
+    "Table": {
+        "TableName": "schoolTable",
+        "KeySchema": [
+            {
+                "AttributeName": "id",
+                "KeyType": "S"
+            }
+        ],
+        "LocalSecondaryIndexes": [
+            {
+                "IndexName": "local_index_1",
+                "KeySchema": [
+                    {
+                        "AttributeName": "id",
+                        "KeyType": "HASH"
+                    }
+                ]
+            }
+        ],
+        "ProvisionedThroughput": {
+            "ReadCapacityUnits": 1,
+            "WriteCapacityUnits": 1
+        }
+    }
+}

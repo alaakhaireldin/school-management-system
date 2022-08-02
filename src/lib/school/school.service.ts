@@ -1,4 +1,3 @@
-import moment = require('moment')
 import { v4 as uuid } from 'uuid'
 
 import { client } from '../db/db.service'
@@ -11,7 +10,7 @@ interface SchoolDbModel {
 class SchoolService {
   public getSchool = async (id: string) => {
     const params = {
-      TableName: 'items',
+      TableName: 'schoolTable',
       Key: {
         id,
       },
@@ -28,14 +27,15 @@ class SchoolService {
     const date = new Date().getTime()
     const schoolId = this.generateId()
     const params = {
-      TableName: 'items',
+      TableName: 'schoolTable',
       Item: {
         id: schoolId,
         schoolName,
         createdAt: date,
+        updatedAt: date,
       },
     }
-    const data = await client.put(params).promise()
+    await client.put(params).promise()
     return schoolId
   }
 }
