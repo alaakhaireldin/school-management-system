@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.101",
+    "@types/joi": "^17.2.3",
     "@types/node": "^18.6.2",
     "@types/prettier": "*",
     "@types/uuid": "^8.3.4",
@@ -37,6 +38,7 @@
   "homepage": "https://github.com/alaakhaireldin/school-managment-system#readme",
   "dependencies": {
     "aws-lambda": "^1.0.7",
-    "aws-sdk": "^2.1185.0"
+    "aws-sdk": "^2.1185.0",
+    "joi": "^17.6.0"
   }
 }
