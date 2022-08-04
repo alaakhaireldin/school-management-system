@@ -31,17 +31,13 @@ class SchoolService {
 
   private conversionFunction = (params: object) => {
     const arrayedParams = Object.entries(params)
-    console.log(arrayedParams)
-
     const result = arrayedParams.reduce(
       (prev, curr) => {
         return {
-          // ExpressionAttributeNames: { ...prev.ExpressionAttributeNames, [`#${curr[0]}`]: curr[0] },
           ExpressionAttributeValues: { ...prev.ExpressionAttributeValues, [`:${curr[0]}`]: curr[1] },
         }
       },
       {
-        // ExpressionAttributeNames: {},
         ExpressionAttributeValues: {},
       },
     )
@@ -82,9 +78,16 @@ class SchoolService {
       },
       ...this.conversionFunction({ ...details, updatedAt: new Date().getTime() }),
     }
-    console.log(params)
-
     await client.update(params).promise()
+  }
+  public deleteSchool = async (schoolId: string) => {
+    const params = {
+      TableName: 'schoolTable',
+      Key: {
+        id: schoolId,
+      },
+    }
+    await client.delete(params).promise()
   }
 }
 

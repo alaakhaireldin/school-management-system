@@ -60,7 +60,7 @@ functions:
     handler: src/api/delete.school.api.handler
     events:
       - http:
-          path: school
+          path: school/{id}
           method: delete
   patchSchool:
     handler: src/api/patch.school.api.handler
