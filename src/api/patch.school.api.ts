@@ -2,7 +2,6 @@ import { APIGatewayEvent, Context } from 'aws-lambda'
 
 import { SchoolDbModel, schoolService } from '../lib/school/school.service'
 import { patchSchoolBodySchema } from '../lib/school/school.validation'
-import { isObjectEmpty } from '../lib/util/object.util'
 
 export const handler = async (event: APIGatewayEvent, context: Context) => {
   const schoolId = event.pathParameters!.id!
