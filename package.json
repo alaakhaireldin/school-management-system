@@ -23,6 +23,7 @@
     "jest": "^28.1.3",
     "nodemon": "*",
     "prettier": "*",
+    "serverless": "^3.22.0",
     "serverless-dynamodb-local": "^0.2.40",
     "serverless-offline": "^9.1.2",
     "serverless-plugin-typescript": "^2.1.2",
