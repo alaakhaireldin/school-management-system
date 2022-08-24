@@ -57,4 +57,4 @@ jobs:
           aws-region: eu-central-1
 
       - name: Serverless Deploy
-        run: serverless deploy
+        run: node_modules/serverless/bin/serverless.js deploy
