@@ -13,6 +13,7 @@ module.exports = {
       statements: 50,
     },
   },
+  setupFiles: ['<rootDir>/src/jest.setup.ts'],
   collectCoverageFrom: ['src/*/.ts'],
   coverageReporters: ['lcov', 'text'],
   verbose: true,
