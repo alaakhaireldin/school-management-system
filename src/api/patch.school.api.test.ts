@@ -26,7 +26,7 @@ test('When given wrong id', async () => {
 
 test('When given empty body', async () => {
   const result = await getTestCase({})
-  expect(result).toEqual({ statusCode: 400, body: JSON.stringify({ message: `"value" must be of type object` }) })
+  expect(result).toEqual({ statusCode: 400, body: JSON.stringify({ message: `"value" must have at least 1 key` }) })
   expect(schoolService.updateSchool).toHaveBeenCalledTimes(0)
 })
 
