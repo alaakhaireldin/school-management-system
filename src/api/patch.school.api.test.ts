@@ -17,7 +17,7 @@ beforeEach(() => {
   schoolService.updateSchool = jest.fn(async () => true)
 })
 
-test.only('When given wrong id', async () => {
+test('When given wrong id', async () => {
   schoolService.updateSchool = jest.fn(async () => false)
   const result = await getTestCase(updatePayload)
   expect(result).toEqual({ statusCode: 404, body: JSON.stringify({ message: `this id does not exist` }) })
