@@ -1,7 +1,7 @@
 import { schoolService } from '../lib/school/school.service'
 import { fakeSchool } from '../test/school.mock.data'
 import { getFakeContext, getHttpEvent } from '../test/test.data'
-import { handler } from './getSchool.api'
+import { handler } from './getSchoolApi'
 
 const getTestCase = (schoolId: string) => handler(getHttpEvent({ pathParameters: { id: schoolId } }), getFakeContext({}))
 const fakeSchoolId = '7a616568-4b75-4466-a15c-b3dcf0fe5615'
