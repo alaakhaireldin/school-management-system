@@ -69,5 +69,5 @@ functions:
           path: school/{id}
           method: patch
 
-Resources:
+resources:
   - ${file(./resources/dynamo.yml)}

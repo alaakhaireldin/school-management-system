@@ -5,7 +5,8 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "jest",
-    "start:offline": "serverless offline start"
+    "start:offline": "serverless offline start",
+    "deploy": "node_modules/serverless/bin/serverless.js deploy"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.101",
