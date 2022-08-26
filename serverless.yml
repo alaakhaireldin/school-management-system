@@ -2,7 +2,7 @@ service: school-management
 frameworkVersion: '2 || 3'
 
 custom:
-  tableName: 'SchoolTable'
+  tableName: 'school-management-${self:provider.stage}'
 provider:
   name: aws
   runtime: python3.8
@@ -20,7 +20,7 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource:
-            - Fn::GetAtt: [DynamoData.Resources.TokensTable, Arn]
+            - Fn::GetAtt: [SchoolTable, Arn]
   environment:
     SCHOOL_TABLE: SchoolTable
 
