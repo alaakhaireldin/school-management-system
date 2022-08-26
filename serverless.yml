@@ -1,18 +1,8 @@
 service: school-management
 frameworkVersion: '2 || 3'
 
-tasks:
-    - name: Import env
-      includeEnv:
-        file: env.yml
-        name: EnvData
-    - name: Import dynamo
-      includeEnv:
-        file: ./resources/dynamo.yml
-        name: DynamoData
-    
 custom:
-  tableName: EnvData.dev.SCHOOL_TABLE_NAME
+  tableName: 'SchoolTable'
 provider:
   name: aws
   runtime: python3.8
@@ -30,11 +20,9 @@ provider:
             - dynamodb:UpdateItem
             - dynamodb:DeleteItem
           Resource:
-            - Fn::GetAtt: [ DynamoData.Resources.TokensTable, Arn ]
+            - Fn::GetAtt: [DynamoData.Resources.TokensTable, Arn]
   environment:
-    SCHOOL_TABLE: ${self:custom.tableName}
-
-
+    SCHOOL_TABLE: SchoolTable
 
 plugins:
   - serverless-plugin-typescript
@@ -68,4 +56,17 @@ functions:
           method: patch
 
 resources:
-  - ${file(./resources/dynamo.yml)}
+  Resources:
+    SchoolTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.tableName}
