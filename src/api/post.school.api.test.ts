@@ -1,7 +1,7 @@
 import { schoolService } from '../lib/school/school.service'
 import { getUuid } from '../lib/util/string.util'
 import { getFakeContext, getHttpEvent } from '../test/test.data'
-import { handler } from './post.school.api'
+import { handler } from './postSchoolApi'
 
 const getTestCase = (body?: object) => handler(getHttpEvent({ body }), getFakeContext({}))
 const fakeSchoolId = '7a616568-4b75-4466-a15c-b3dcf0fe5615'

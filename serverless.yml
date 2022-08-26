@@ -51,7 +51,7 @@ functions:
           path: school/{id}
           method: get
   postSchool:
-    handler: src/api/post.school.api.handler
+    handler: src/api/postSchoolApi.handler
     events:
       - http:
           path: school
