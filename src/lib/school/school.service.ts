@@ -67,7 +67,10 @@ class SchoolService {
         updatedAt: date,
       },
     }
+    console.log('calling the database create')
     await client.put(params).promise()
+    console.log('putting the school details in the database')
+
     return schoolId
   }
   public updateSchool = async (schoolId: string, details: Partial<Pick<SchoolDbModel, 'schoolType' | 'region' | 'schoolName'>>) => {
