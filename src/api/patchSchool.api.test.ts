@@ -1,7 +1,7 @@
 import { SchoolDbModel, schoolService } from '../lib/school/school.service'
 import { fakeSchool, fakeSchoolId } from '../test/school.mock.data'
 import { getFakeContext, getHttpEvent } from '../test/test.data'
-import { handler } from './patch.school.api'
+import { handler } from './patchSchool.api'
 
 const updatePayload: Pick<SchoolDbModel, 'schoolName' | 'schoolType' | 'region'> = {
   schoolName: fakeSchool.schoolName,
