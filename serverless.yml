@@ -45,7 +45,7 @@ plugins:
 
 functions:
   getSchool:
-    handler: src/api/getSchool.api.handler
+    handler: src/api/getSchoolApi.handler
     events:
       - http:
           path: school/{id}
@@ -57,13 +57,13 @@ functions:
           path: school
           method: post
   deleteSchool:
-    handler: src/api/deleteSchool.api.handler
+    handler: src/api/deleteSchoolApi.handler
     events:
       - http:
           path: school/{id}
           method: delete
   patchSchool:
-    handler: src/api/patchSchool.api.handler
+    handler: src/api/patchSchoolApi.handler
     events:
       - http:
           path: school/{id}
