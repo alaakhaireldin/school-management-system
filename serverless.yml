@@ -1,42 +1,40 @@
 service: school-management
+frameworkVersion: '2 || 3'
 
+tasks:
+    - name: Import env
+      includeEnv:
+        file: env.yml
+        name: EnvData
+    - name: Import dynamo
+      includeEnv:
+        file: ./resources/dynamo.yml
+        name: DynamoData
+    
+custom:
+  tableName: EnvData.dev.SCHOOL_TABLE_NAME
 provider:
   name: aws
-  runtime: nodejs16.x
-  region: eu-north-1
-  logRetentionInDays: 5
+  runtime: python3.8
   lambdaHashingVersion: '20201221'
-  httpApi:
-    cors: true
-  environment: ${file(env.yml):${self:custom.stage}}
+  stage: dev
   iam:
     role:
       statements:
         - Effect: Allow
           Action:
-            - 'dynamodb:*'
-            - 'ec2:CreateNetworkInterface'
-            - 'ec2:DescribeNetworkInterfaces'
-            - 'ec2:DeleteNetworkInterface'
-            - 'secretsmanager:GetSecretValue'
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
           Resource:
-            - '*'
+            - Fn::GetAtt: [ DynamoData.Resources.TokensTable, Arn ]
+  environment:
+    SCHOOL_TABLE: ${self:custom.tableName}
 
-custom:
-  stage: dev
-  dynamodb:
-    seed:
-      domain:
-        sources:
-          - table: schoolTable
-          - sources: [./resources/migrations/v0.json]
-    stages:
-      - dev
-    start:
-      port: 41581
-      inMemory: true
-      migrate: true
-      sharedDb: true
+
 
 plugins:
   - serverless-plugin-typescript
