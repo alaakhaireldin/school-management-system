@@ -2,6 +2,7 @@ import { APIGatewayEvent, Context } from 'aws-lambda'
 
 import { schoolService } from '../lib/school/school.service'
 export const handler = async (event: APIGatewayEvent, context: Context) => {
+  console.log(event)
   const schoolId = event.pathParameters!.id!
 
   const deleteResult = await schoolService.deleteSchool(schoolId)
