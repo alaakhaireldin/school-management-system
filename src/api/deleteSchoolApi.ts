@@ -2,7 +2,6 @@ import { APIGatewayEvent, Context } from 'aws-lambda'
 
 import { schoolService } from '../lib/school/school.service'
 export const handler = async (event: APIGatewayEvent, context: Context) => {
-  console.log(event)
   const schoolId = event.pathParameters!.id!
 
   const deleteResult = await schoolService.deleteSchool(schoolId)
@@ -13,7 +12,6 @@ export const handler = async (event: APIGatewayEvent, context: Context) => {
         message: 'This school id does not exit',
       }),
     }
-    console.log('the school id does not exist')
   }
   return {
     statusCode: 200,
@@ -21,5 +19,4 @@ export const handler = async (event: APIGatewayEvent, context: Context) => {
       message: 'School deleted',
     }),
   }
-  console.log('the school details are deleted')
 }
