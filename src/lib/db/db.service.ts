@@ -3,7 +3,7 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 
 let options: DocumentClient.DocumentClientOptions & DynamoDB.Types.ClientConfiguration = { region: 'eu-north-1' }
 
-if (true) {
+if (process.env.IS_OFFLINE === 'true') {
   options = {
     endpoint: 'http://localhost:41581',
   }
