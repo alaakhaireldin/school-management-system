@@ -68,6 +68,7 @@ class SchoolService {
       },
     }
     await client.put(params).promise()
+
     return schoolId
   }
   public updateSchool = async (schoolId: string, details: Partial<Pick<SchoolDbModel, 'schoolType' | 'region' | 'schoolName'>>) => {
@@ -78,16 +79,24 @@ class SchoolService {
       },
       ...this.conversionFunction({ ...details, updatedAt: new Date().getTime() }),
     }
-    await client.update(params).promise()
+    const {
+      $response: { data },
+    } = await client.update(params).promise()
+    if (!data) return false
+    return true
   }
-  public deleteSchool = async (schoolId: string) => {
+  public deleteSchool = async (schoolId: string): Promise<boolean> => {
     const params = {
       TableName: 'schoolTable',
       Key: {
         id: schoolId,
       },
     }
-    await client.delete(params).promise()
+    const {
+      $response: { data },
+    } = await client.delete(params).promise()
+    if (!data) return false
+    return true
   }
 }
 

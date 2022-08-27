@@ -11,7 +11,10 @@ export const handler = async (event: APIGatewayEvent, context: Context) => {
   if (result.error) {
     return { statusCode: 400, body: JSON.stringify({ message: `${result.error.message}` }) }
   }
-  await schoolService.updateSchool(schoolId, body)
+
+  const updated = await schoolService.updateSchool(schoolId, body)
+  if (!updated) return { statusCode: 404, body: JSON.stringify({ message: 'this id does not exist' }) }
+
   return {
     statusCode: 200,
     body: JSON.stringify({
