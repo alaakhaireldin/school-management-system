@@ -6,15 +6,7 @@ export const handler = async (event: APIGatewayEvent, context: Context) => {
   const studentDetails = await studentService.getStudent(studentId)
   if (!studentDetails) return { statusCode: 404, body: JSON.stringify({ message: `${studentId} does not exist` }) }
 
-  const deleteResult = await studentService.deleteStudent(studentId)
-  if (!deleteResult) {
-    return {
-      statusCode: 404,
-      body: JSON.stringify({
-        message: 'This student id does not exit',
-      }),
-    }
-  }
+  await studentService.deleteStudent(studentId)
   return {
     statusCode: 200,
     body: JSON.stringify({
