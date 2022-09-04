@@ -53,24 +53,24 @@ functions:
       - http:
           path: school/{id}
           method: patch
-  # getStudent:
-  #   handler: src/api/getStudentApi.handler
-  #   events:
-  #     - http:
-  #         path: student/{id}
-  #         method: get
+  getStudent:
+    handler: src/api/getStudentApi.handler
+    events:
+      - http:
+          path: student/{id}
+          method: get
   postStudent:
     handler: src/api/postStudentApi.handler
     events:
       - http:
           path: student
           method: post
-  # deleteStudent:
-  #   handler: src/api/deleteStudentApi.handler
-  #   events:
-  #     - http:
-  #         path: student/{id}
-  #         method: delete
+  deleteStudent:
+    handler: src/api/deleteStudentApi.handler
+    events:
+      - http:
+          path: student/{id}
+          method: delete
   patchStudent:
     handler: src/api/patchStudentApi.handler
     events:
