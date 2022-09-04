@@ -9,7 +9,7 @@ export interface StudentDbModel {
   studentName: string
   gradeYear: number
   createdAt: number
-  updatedAt: number
+  // updatedAt: number
 }
 class StudentService {
   public getStudent = async (id: string) => {

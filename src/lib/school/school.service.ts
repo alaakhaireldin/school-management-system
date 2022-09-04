@@ -2,6 +2,7 @@ import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { v4 as uuid } from 'uuid'
 
 import { client } from '../db/db.service'
+import { getUpdateDBObjectBody } from '../util/db.util'
 
 export enum SCHOOL_TYPE {
   PRIVATE = 'private',
@@ -11,6 +12,7 @@ export interface SchoolDbModel {
   schoolName: string
   region?: string
   createdAt: number
+  // updatedAt: number
   schoolType: SCHOOL_TYPE
 }
 class SchoolService {
@@ -27,31 +29,6 @@ class SchoolService {
   }
   private generateId = () => {
     return uuid()
-  }
-
-  private conversionFunction = (params: object) => {
-    const arrayedParams = Object.entries(params)
-    const result = arrayedParams.reduce(
-      (prev, curr) => {
-        return {
-          ExpressionAttributeValues: { ...prev.ExpressionAttributeValues, [`:${curr[0]}`]: curr[1] },
-        }
-      },
-      {
-        ExpressionAttributeValues: {},
-      },
-    )
-    const updateExpression = Object.keys(params)
-      .map(element => {
-        return `${element} = :${element}`
-      })
-      .join(', ')
-    const finalResult = `SET ${updateExpression}`
-
-    return {
-      ...result,
-      UpdateExpression: finalResult,
-    }
   }
 
   public createSchool = async ({ schoolName, schoolType }: Pick<SchoolDbModel, 'schoolName' | 'schoolType'>) => {
@@ -77,7 +54,7 @@ class SchoolService {
       Key: {
         id: schoolId,
       },
-      ...this.conversionFunction({ ...details, updatedAt: new Date().getTime() }),
+      ...getUpdateDBObjectBody({ ...details, updatedAt: new Date().getTime() }),
     }
     const {
       $response: { data },
