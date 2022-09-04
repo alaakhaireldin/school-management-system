@@ -4,21 +4,17 @@ import { v4 as uuid } from 'uuid'
 import { client } from '../db/db.service'
 import { getUpdateDBObjectBody } from '../util/db.util'
 
-export enum SCHOOL_TYPE {
-  PRIVATE = 'private',
-  PUBLIC = 'public',
-}
-export interface SchoolDbModel {
-  schoolName: string
-  region?: string
+export interface StudentDbModel {
+  schoolId: string
+  studentName: string
+  gradeYear: number
   createdAt: number
   // updatedAt: number
-  schoolType: SCHOOL_TYPE
 }
-class SchoolService {
-  public getSchool = async (id: string) => {
+class StudentService {
+  public getStudent = async (id: string) => {
     const params = {
-      TableName: 'schoolTable',
+      TableName: 'studentTable',
       Key: {
         id,
       },
@@ -31,28 +27,29 @@ class SchoolService {
     return uuid()
   }
 
-  public createSchool = async ({ schoolName, schoolType }: Pick<SchoolDbModel, 'schoolName' | 'schoolType'>) => {
+  public createStudent = async ({ studentName, schoolId, gradeYear }: Pick<StudentDbModel, 'studentName' | 'schoolId' | 'gradeYear'>) => {
     const date = new Date().getTime()
-    const schoolId = this.generateId()
+    const studentId = this.generateId()
     const params = {
-      TableName: 'schoolTable',
+      TableName: 'studentTable',
       Item: {
-        id: schoolId,
-        schoolName,
-        schoolType,
+        id: studentId,
+        studentName,
+        schoolId,
+        gradeYear,
         createdAt: date,
         updatedAt: date,
       },
     }
     await client.put(params).promise()
 
-    return schoolId
+    return studentId
   }
-  public updateSchool = async (schoolId: string, details: Partial<Pick<SchoolDbModel, 'schoolType' | 'region' | 'schoolName'>>) => {
+  public updateStudent = async (studentId: string, details: Partial<Pick<StudentDbModel, 'gradeYear' | 'studentName' | 'schoolId'>>) => {
     const params = {
-      TableName: 'schoolTable',
+      TableName: 'studentTable',
       Key: {
-        id: schoolId,
+        id: studentId,
       },
       ...getUpdateDBObjectBody({ ...details, updatedAt: new Date().getTime() }),
     }
@@ -62,11 +59,11 @@ class SchoolService {
     if (!data) return false
     return true
   }
-  public deleteSchool = async (schoolId: string): Promise<boolean> => {
+  public deleteStudent = async (studentId: string): Promise<boolean> => {
     const params = {
-      TableName: 'schoolTable',
+      TableName: 'studentTable',
       Key: {
-        id: schoolId,
+        id: studentId,
       },
     }
     const {
@@ -77,4 +74,4 @@ class SchoolService {
   }
 }
 
-export const schoolService = new SchoolService()
+export const studentService = new StudentService()
